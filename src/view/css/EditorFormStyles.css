@@ -1,0 +1,12 @@
+.menu-bar{
+    -fx-background-color: Black;
+}
+
+.menu-bar  .text{
+    -fx-fill: silver;
+    -fx-cursor: hand;
+    -fx-font-size: 18px;
+}
+
+
+

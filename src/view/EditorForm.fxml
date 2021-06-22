@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -8,6 +9,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -95,9 +98,17 @@
                 <TextField fx:id="txtSearch" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="203.0" />
                 <Button layoutX="224.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnFindNext_OnAction" prefHeight="26.0" prefWidth="41.0" text="↓" />
                 <Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnFindPrevious_OnAction" prefHeight="26.0" prefWidth="41.0" text="↑" />
+            <ImageView accessibleRole="BUTTON" fitHeight="10.0" fitWidth="10.0" layoutX="301.0" onMouseClicked="#btnFindClose_OnMouseClicked">
+               <image>
+                  <Image url="@../asserts/Delete.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="pneReplace" layoutX="321.0" layoutY="88.0" prefHeight="89.0" prefWidth="314.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="88.0">
+        <AnchorPane fx:id="pneReplace" layoutX="328.0" layoutY="53.0" onMouseClicked="#btnFindClose_OnMouseClicked" prefHeight="89.0" prefWidth="314.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <TextField fx:id="txtSearch1" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="203.0" />
                 <Button layoutX="224.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnFindNext_OnAction" prefHeight="26.0" prefWidth="41.0" text="↓" />
@@ -105,6 +116,14 @@
                 <TextField fx:id="txtReplace" layoutX="14.0" layoutY="47.0" prefHeight="26.0" prefWidth="203.0" />
                 <Button layoutX="224.0" layoutY="47.0" mnemonicParsing="false" onAction="#btnReplace_OnAction" prefHeight="26.0" prefWidth="41.0" text="R" />
                 <Button layoutX="265.0" layoutY="47.0" mnemonicParsing="false" onAction="#btnReplaceAll_OnAction" prefHeight="26.0" prefWidth="41.0" text="RA" />
+            <ImageView accessibleRole="BUTTON" fitHeight="10.0" fitWidth="10.0" layoutX="302.0" layoutY="2.0" onMouseClicked="#btnReplaceClose_OnMouseClicked">
+               <image>
+                  <Image url="@../asserts/Delete.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
             </children>
         </AnchorPane>
     </children>

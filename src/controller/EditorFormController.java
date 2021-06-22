@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -144,7 +145,14 @@ public class EditorFormController {
     }
 
 
+    public void btnFindClose_OnMouseClicked(MouseEvent mouseEvent) {
+        System.out.println("SS");
+        pneFind.setVisible(false);
+    }
 
+    public void btnReplaceClose_OnMouseClicked(MouseEvent mouseEvent) {
+        pneReplace.setVisible(false);
+    }
 }
 
 class Index {

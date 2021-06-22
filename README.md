@@ -1,5 +1,5 @@
-# "Simple Text Ediotr"
-This is a simple Text Editor which allows you to find words, replace words, save text in a file, open a file and load text to the Editor etc:-
+# "Simple Text Editor"
+This is a simple Text Editor which allows user to find words, replace words, save text in a file, open a file and load text to the Editor etc:-
 
 ### Steps to get started on the project
 1. Clone the git repository or download the project as a Zip file using this link.

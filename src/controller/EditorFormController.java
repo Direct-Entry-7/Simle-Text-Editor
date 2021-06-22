@@ -9,6 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import util.FXUtil;
 
 import java.awt.event.TextListener;
@@ -27,6 +29,7 @@ public class EditorFormController {
     public AnchorPane pneReplace;
     public TextField txtSearch1;        // This is inside the pneReplace
     public TextField txtReplace;
+    public AnchorPane pneTextEditor;
     private int findOffset = -1;
 
     public void initialize() {
@@ -68,6 +71,8 @@ public class EditorFormController {
     }
 
     public void mnuItemExit_OnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage)pneTextEditor.getScene().getWindow();
+        stage.close();
     }
 
     public void mnuItemFind_OnAction(ActionEvent actionEvent) {

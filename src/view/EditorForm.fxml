@@ -11,7 +11,7 @@
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="472.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditorFormController">
+<AnchorPane fx:id="pneTextEditor" prefHeight="472.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditorFormController">
     <children>
         <MenuBar layoutX="7.0" layoutY="14.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -97,7 +97,7 @@
                 <Button layoutX="265.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnFindPrevious_OnAction" prefHeight="26.0" prefWidth="41.0" text="↑" />
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="pneReplace" layoutX="338.0" layoutY="10.0" prefHeight="89.0" prefWidth="314.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane fx:id="pneReplace" layoutX="321.0" layoutY="88.0" prefHeight="89.0" prefWidth="314.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="88.0">
             <children>
                 <TextField fx:id="txtSearch1" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="203.0" />
                 <Button layoutX="224.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnFindNext_OnAction" prefHeight="26.0" prefWidth="41.0" text="↓" />

@@ -4,17 +4,20 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import util.FXUtil;
 
 import java.awt.event.TextListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -32,10 +35,13 @@ public class EditorFormController {
     public TextField txtReplace;
     public AnchorPane pneTextEditor;
     private int findOffset = -1;
+    private PrinterJob printerJob;
+    private File file;
 
     public void initialize() {
         pneFind.setVisible(false);
         pneReplace.setVisible(false);
+        this.printerJob = PrinterJob.createPrinterJob();
 
         ChangeListener textListener = (ChangeListener<String>) (observable, oldValue, newValue) -> {
             searchMatches(newValue);
@@ -69,6 +75,7 @@ public class EditorFormController {
     public void mnuItemNew_OnAction(ActionEvent actionEvent) {
         txtEditor.clear();
         txtEditor.requestFocus();
+        this.file = null;
     }
 
     public void mnuItemExit_OnAction(ActionEvent actionEvent) {
@@ -139,6 +146,91 @@ public class EditorFormController {
 
     public void btnReplaceClose_OnMouseClicked(MouseEvent mouseEvent) {
         pneReplace.setVisible(false);
+    }
+
+    public void mnuItemOpen_OnAction(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File");
+        fileChooser.getExtensionFilters().add
+                (new FileChooser.ExtensionFilter("All Text Files", "*.txt", "*.html"));
+        fileChooser.getExtensionFilters().add
+                (new FileChooser.ExtensionFilter("All Files", "*"));
+        this.file = fileChooser.showOpenDialog(txtEditor.getScene().getWindow());
+
+        if (file == null) return;
+
+        txtEditor.clear();
+        try (FileReader fileReader = new FileReader(file);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                txtEditor.appendText(line + '\n');
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void mnuItemSave_OnAction(ActionEvent actionEvent) {
+        if (this.file == null) {
+            mnuItemSaveAs_OnAction(new ActionEvent());
+        }else{
+            try (FileWriter fw = new FileWriter(this.file);
+                 BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(txtEditor.getText());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public void mnuItemSaveAs_OnAction(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save File");
+        File file = fileChooser.showSaveDialog(txtEditor.getScene().getWindow());
+
+        if (file == null) return;
+
+        try (FileWriter fw = new FileWriter(file);
+             BufferedWriter bw = new BufferedWriter(fw)) {
+            bw.write(txtEditor.getText());
+            this.file = file;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mnuItemCut_OnAction(ActionEvent actionEvent) {
+        txtEditor.cut();
+    }
+
+    public void mnuItemCopy_OnAction(ActionEvent actionEvent) {
+        txtEditor.copy();
+    }
+
+    public void mnuItemPaste_OnAction(ActionEvent actionEvent) {
+        txtEditor.paste();
+    }
+
+    public void mnuItemAbout_OnAction(ActionEvent actionEvent) {
+    }
+
+    public void mnuItemPageSetup_OnAction(ActionEvent actionEvent) {
+        System.out.println("Called");
+        this.printerJob.showPageSetupDialog(txtEditor.getScene().getWindow());
+    }
+
+    public void mnuItemPrint_OnAction(ActionEvent actionEvent) {
+        boolean printDialog = printerJob.showPrintDialog(txtEditor.getScene().getWindow());
+
+        if(printDialog){
+            printerJob.printPage(txtEditor.lookup("Text"));
+        }
     }
 }
 

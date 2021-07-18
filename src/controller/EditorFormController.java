@@ -4,11 +4,15 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.print.PrinterJob;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -49,6 +53,12 @@ public class EditorFormController {
 
         txtSearch.textProperty().addListener(textListener);
         txtSearch1.textProperty().addListener(textListener);
+
+
+        txtEditor.setOnDragDone(event -> {
+            System.out.println(event.getPickResult());
+        });
+
     }
 
     private void searchMatches(String query){
@@ -140,7 +150,6 @@ public class EditorFormController {
 
 
     public void btnFindClose_OnMouseClicked(MouseEvent mouseEvent) {
-        System.out.println("SS");
         pneFind.setVisible(false);
     }
 
@@ -159,18 +168,7 @@ public class EditorFormController {
 
         if (file == null) return;
 
-        txtEditor.clear();
-        try (FileReader fileReader = new FileReader(file);
-             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-
-            String line = null;
-            while ((line = bufferedReader.readLine()) != null) {
-                txtEditor.appendText(line + '\n');
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       openFile(file);
 
     }
 
@@ -230,6 +228,40 @@ public class EditorFormController {
 
         if(printDialog){
             printerJob.printPage(txtEditor.lookup("Text"));
+        }
+    }
+
+    public void txtEditor_OnMouseDragOver(MouseDragEvent mouseDragEvent) {
+//        if(d)
+    }
+
+    public void txtEditor_OnDragOver(DragEvent dragEvent) {
+        if(dragEvent.getDragboard().hasFiles()){
+            dragEvent.acceptTransferModes(TransferMode.ANY);
+            dragEvent.consume();
+        }
+    }
+
+    public void txtEditor_OnDragDropped(DragEvent dragEvent) {
+        if(dragEvent.getDragboard().hasFiles()){
+            File file = dragEvent.getDragboard().getFiles().get(0);
+            openFile(file);
+            dragEvent.setDropCompleted(true);
+        }
+    }
+
+    private void openFile(File file) {
+        txtEditor.clear();
+        try (FileReader fileReader = new FileReader(file);
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                txtEditor.appendText(line + '\n');
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
